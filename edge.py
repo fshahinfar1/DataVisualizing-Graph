@@ -1,6 +1,10 @@
 import color
 import vertex
-from pygame import Surface, draw
+import math
+from pygame import Surface, draw, image, transform
+
+dir_img = image.load("img/dir.png")  # type: Surface
+
 
 class Edge:
 
@@ -15,8 +19,18 @@ class Edge:
         self.__source = source  # type: vertex.Vertex
         self.__destination = destination  # type: vertex.Vertex
         self.__color = color  # type: color.Color
+        source.add_degree_out()
+        destination.add_degree_in()
 
     def draw(self, screen):
+        pos_a = self.__source.get_position()
+        pos_b = self.__destination.get_position()
         draw.line(screen, self.__color.get_value()\
-        , self.__source.get_position(), self.__destination.get_position()\
-        , 5)
+        , pos_a, pos_b, 5)
+        mid_point =((pos_a[0]+pos_b[0])//2, (pos_a[1]+pos_b[1])//2)
+        angle = 360 - math.degrees(math.atan2(pos_b[1]-pos_a[1], pos_b[0]-pos_a[0]))
+        img = transform.rotozoom(dir_img, angle, 0.075)
+        img_width, img_height = img.get_size()
+        left_corner = (mid_point[0]-img_width//2, mid_point[1]-img_height//2)
+
+        screen.blit(img, left_corner)

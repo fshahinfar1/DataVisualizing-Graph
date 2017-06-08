@@ -1,6 +1,7 @@
 import pygame
 import sys
 import graph
+import color
 
 pygame.init()
 
@@ -17,7 +18,7 @@ g = graph.Graph()
 g.add_vertex((200,200))
 g.add_vertex((100,200))
 g.add_edge(1, 2)
-
+g.add_edge(0, 1, color.Red)
 
 
 while flag_run:

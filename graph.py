@@ -11,8 +11,7 @@ class Graph:
         self.__node_count = 1  # type: int
         self.__vertices = [vertex.Vertex(Graph.vertex_id, (150, 150))]  # type: list
         Graph.vertex_id += 1
-        self.__adjacent_vertices = [[]] # type: list
-
+        self.__adjacent_vertices = [[]] # type:
 
     def __len__(self):
         return self.__node_count
@@ -32,8 +31,8 @@ class Graph:
         self.__adjacent_vertices[source].append(new_edge)
 
     def draw(self, screen):
-        for vertex in self.__vertices:
-            vertex.draw(screen)
         for edges in self.__adjacent_vertices:
             for edge in edges:
                 edge.draw(screen)
+        for vertex in self.__vertices:
+            vertex.draw(screen)
