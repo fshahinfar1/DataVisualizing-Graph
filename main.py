@@ -1,5 +1,6 @@
 import pygame
 import sys
+import graph
 
 pygame.init()
 
@@ -11,6 +12,14 @@ clock = pygame.time.Clock()
 
 white_color = 255, 255, 255
 
+# create graph and fill it
+g = graph.Graph()
+g.add_vertex((200,200))
+g.add_vertex((100,200))
+g.add_edge(1, 2)
+
+
+
 while flag_run:
     # event
     for event in pygame.event.get():
@@ -20,6 +29,7 @@ while flag_run:
     #logic
     #draw
     screen.fill(white_color)
+    g.draw(screen)
     pygame.display.update()
 
     clock.tick(30)
