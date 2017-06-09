@@ -23,8 +23,6 @@ g.add_edge(1, 2)
 g.add_edge(0, 1, color.Red)
 
 # dragable
-def drop(graph, pos):
-    print('dropped')
 img = pygame.Surface((30,30))
 img.fill(color.White.get_value())
 img.convert_alpha()
