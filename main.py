@@ -23,11 +23,13 @@ g.add_edge(1, 2)
 g.add_edge(0, 1, color.Red)
 
 # dragable
-def drop():
-    print('drop')
-img = pygame.Surface((11,11))
-pygame.draw.circle(img, color.Black.get_value(), (0, 0), 10)
-dragable_vertex = dragable_object.Dragable((60,250), 'vertex dragable object', img, drop)
+def drop(graph, pos):
+    print('dropped')
+img = pygame.Surface((30,30))
+img.fill(color.White.get_value())
+img.convert_alpha()
+pygame.draw.circle(img, color.Black.get_value(), (10, 10), 10)
+dragable_vertex = dragable_object.DragableVertex((60,420), 'vertex dragable object', img, g)
 
 
 while flag_run:
