@@ -2,6 +2,8 @@ import pygame
 import sys
 import graph
 import color
+import dragable_object
+
 
 pygame.init()
 
@@ -11,7 +13,7 @@ screen_size = screen_width, screen_height = 450, 450  # type: tuple
 screen = pygame.display.set_mode(screen_size)  #type: pygame.Surface
 clock = pygame.time.Clock()
 
-white_color = 255, 255, 255
+flag_mouse_state = 'release'
 
 # create graph and fill it
 g = graph.Graph()
@@ -20,6 +22,13 @@ g.add_vertex((100,200))
 g.add_edge(1, 2)
 g.add_edge(0, 1, color.Red)
 
+# dragable
+def drop():
+    print('drop')
+img = pygame.Surface((11,11))
+pygame.draw.circle(img, color.Black.get_value(), (0, 0), 10)
+dragable_vertex = dragable_object.Dragable((60,250), 'vertex dragable object', img, drop)
+
 
 while flag_run:
     # event
@@ -27,10 +36,16 @@ while flag_run:
         if event.type == pygame.QUIT:
             flag_run = False
             break
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            flag_mouse_state = "clicked"
+        elif event.type == pygame.MOUSEBUTTONUP:
+            flag_mouse_state = "release"
     #logic
+    dragable_vertex.loop(flag_mouse_state)
     #draw
-    screen.fill(white_color)
+    screen.fill(color.White.get_value())
     g.draw(screen)
+    dragable_vertex.draw(screen)
     pygame.display.update()
 
     clock.tick(30)
