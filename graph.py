@@ -30,6 +30,10 @@ class Graph:
         Graph.edge_id += 1
         self.__adjacent_vertices[source].append(new_edge)
 
+    def loop(self, mouse_state):
+        for vertex in self.__vertices:
+            vertex.loop(mouse_state)
+
     def draw(self, screen):
         for edges in self.__adjacent_vertices:
             for edge in edges:

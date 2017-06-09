@@ -1,4 +1,4 @@
-
+import pygame
 
 class Selectable:
 
@@ -36,11 +36,20 @@ class Selectable:
     def get_img(self):
         return self.__img
 
+    def on_clicked(self):
+        pass
+
+    def on_release(self):
+        pass
+
     def loop(self, mouse_state):
         if mouse_state == "clicked": #pygame.mouse.get_pressed()
             if self.position_on_object(pygame.mouse.get_pos()):
                 if not self.__flag_selected:
                     self.__flag_selected = True
+                    self.on_clicked()
+                    print('selected')
         elif mouse_state == "release":
             if self.__flag_selected:
                 self.__flag_selected = False
+                self.on_release()

@@ -23,7 +23,7 @@ g.add_edge(1, 2)
 g.add_edge(0, 1, color.Red)
 
 # dragable
-img = pygame.Surface((30,30))
+img = pygame.Surface((20,20))
 img.fill(color.White.get_value())
 img.convert_alpha()
 pygame.draw.circle(img, color.Black.get_value(), (10, 10), 10)
@@ -42,6 +42,9 @@ while flag_run:
             flag_mouse_state = "release"
     #logic
     dragable_vertex.loop(flag_mouse_state)
+    g.loop(flag_mouse_state)
+    if flag_mouse_state == 'clicked':
+        flag_mouse_state = 'drag'
     #draw
     screen.fill(color.White.get_value())
     g.draw(screen)

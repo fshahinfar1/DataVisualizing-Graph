@@ -1,11 +1,12 @@
 import color
+import selectable_object
 from pygame import Surface, draw, font
 
 font.init()
 font = font.SysFont("arial", 16)
 
 
-class Vertex:
+class Vertex(selectable_object.Selectable):
 
     def __init__(self, id, pos, color=color.Black):
         """
@@ -16,6 +17,8 @@ class Vertex:
         :type pos: tuple
         :type color: color.Color
         """
+        img = Surface((20,20))
+        selectable_object.Selectable.__init__(self, pos, img)
         self.__id = id  # type: int
         self.__position = pos  # type: tuple
         self.__color = color  # type: Color
@@ -55,6 +58,13 @@ class Vertex:
 
     def add_degree_out(self):
         self.__degree_out += 1
+
+    def on_clicked(self):
+        self.__color = color.Red
+        print('clicked')
+
+    def on_release(self):
+        self.__color = color.Black
 
     def draw(self, screen):
         """
