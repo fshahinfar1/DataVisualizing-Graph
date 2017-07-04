@@ -1,14 +1,15 @@
-import color
-import selectable_object
-from pygame import Surface, draw, font
+import Graph.graph
+from Graph.color import *
+from Graph.selectable_object import *
+from pygame import Surface, draw, font, mouse
 
 font.init()
 font = font.SysFont("arial", 16)
 
 
-class Vertex(selectable_object.Selectable):
+class Vertex(Selectable):
 
-    def __init__(self, id, pos, color=color.Black):
+    def __init__(self, id, pos, graph, color=Black):
         """
         :param id:
         :param pos:
@@ -18,7 +19,7 @@ class Vertex(selectable_object.Selectable):
         :type color: color.Color
         """
         img = Surface((20,20))
-        selectable_object.Selectable.__init__(self, pos, img)
+        Selectable.__init__(self, pos, img)
         self.__id = id  # type: int
         self.__position = pos  # type: tuple
         self.__color = color  # type: Color
@@ -26,6 +27,7 @@ class Vertex(selectable_object.Selectable):
         self.__degree_in = 0  # type: int
         self.__degree_out = 0  # type: int
         self.__radius = 10  # type: int
+        self.__graph = graph  # type: Graph.graph.Graph
 
     def get_id(self):
         return self.__id
@@ -60,11 +62,23 @@ class Vertex(selectable_object.Selectable):
         self.__degree_out += 1
 
     def on_clicked(self):
-        self.__color = color.Red
+        self.__color = Red
         print('clicked')
 
-    def on_release(self):
-        self.__color = color.Black
+    def on_unselected(self):
+        self.__color = Black
+
+    def loop(self, mouse_state):
+        if mouse_state == "clicked":
+            if self.position_on_object(mouse.get_pos()):
+                self.set_selected(True)
+                for v in self.__graph.get_vertices():
+                    if v.is_selected() and v is not self:
+                        v.set_selected(False)
+                        v.on_unselected()
+                        print("un selecte")
+                        break
+                self.on_clicked()
 
     def draw(self, screen):
         """
@@ -73,5 +87,5 @@ class Vertex(selectable_object.Selectable):
         :type screen: Surface
         """
         draw.circle(screen, self.__color.get_value(), self.__position, self.__radius)
-        degree_text = font.render(str(self.__degree_in)+"/"+str(self.__degree_out), True, color.Blue.get_value())
+        degree_text = font.render(str(self.__degree_in)+"/"+str(self.__degree_out), True, Blue.get_value())
         screen.blit(degree_text, self.__position)

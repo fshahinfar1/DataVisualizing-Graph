@@ -1,12 +1,18 @@
 import pygame
 
+
+class SelectionMode:
+    Default = 0
+    Dragable = 1
+
 class Selectable:
 
-    def __init__(self, pos, img):
+    def __init__(self, pos, img, selection_mode=SelectionMode.Default):
         self.__position = pos  # type: tuple  description: center of drawn img
         self.__img = img  # type: pygame.Surface
         self.__img_size = self.__img_width, self.__img_height = self.__img.get_size()
         self.__flag_selected = False
+        self.__selection_mode = selection_mode
 
     def get_position(self):
         return self.__position
@@ -14,7 +20,7 @@ class Selectable:
     def set_position(self, value):
         self.__position = value
 
-    def change_selected(self, value=None):
+    def set_selected(self, value=None):
         if value is None:
             value = not self.__flag_selected
         self.__flag_selected = value
@@ -37,19 +43,22 @@ class Selectable:
         return self.__img
 
     def on_clicked(self):
-        pass
+        print("ON Click")
 
     def on_release(self):
-        pass
+        print("ON Release")
+
+    def on_unselected(self):
+        print("ON Unselected")
 
     def loop(self, mouse_state):
-        if mouse_state == "clicked": #pygame.mouse.get_pressed()
+        # print("selectable object's Loop")
+        if mouse_state == "clicked":
             if self.position_on_object(pygame.mouse.get_pos()):
-                if not self.__flag_selected:
-                    self.__flag_selected = True
-                    self.on_clicked()
-                    print('selected')
+                self.on_clicked()
+                self.set_selected(True) # True
         elif mouse_state == "release":
-            if self.__flag_selected:
-                self.__flag_selected = False
+            if self.is_selected():
                 self.on_release()
+                self.on_unselected()
+                self.set_selected(False)

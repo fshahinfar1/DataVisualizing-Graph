@@ -1,39 +1,27 @@
 import pygame
-import graph
-import selectable_object
+import Graph.graph
+from Graph.selectable_object import *
 
 
-class Dragable(selectable_object.Selectable):
+class Dragable(Selectable):
 
-    def __init__(self, pos, name, img, drop_function=None):
-        selectable_object.Selectable.__init__(self, pos, img)
+    def __init__(self, pos, name, img):
+        Selectable.__init__(self, pos, img, SelectionMode.Dragable)
         self.__origin_position = pos  # type: tuple  description: center of drawn img
         self.__name = name  # type:
-        if drop_function is None:
-            self.__on_drop = self.__drop_function
-        else:
-            self.__on_drop = drop_function
 
-    def __drop_function():
-        pass
+    def __drop_function(self):
+        print("Dragable's drop_function")
 
     def get_name(self):
         return self.__name
 
-    def loop(self, mouse_state):
-        if mouse_state == "clicked": #pygame.mouse.get_pressed()
-            if self.position_on_object(pygame.mouse.get_pos()):
-                if not self.is_selected():
-                    print('selected')
-                    self.change_selected(True)
-        elif mouse_state == "release":
-            if self.is_selected():
-                self.change_selected(False)
-                # print(self.is_selected())
-                self.__on_drop()
-                print('drop')
-                self.set_position(self.__origin_position)
+    def on_unselected(self):
+        self.__drop_function()
+        self.set_position(self.__origin_position)
 
+    def loop(self, mouse_state):
+        super(Dragable, self).loop(mouse_state)  # Do what is in the parent
         if self.is_selected():
             self.set_position(pygame.mouse.get_pos())
 
@@ -46,9 +34,14 @@ class Dragable(selectable_object.Selectable):
 
 class DragableVertex(Dragable):
     def __init__(self, pos, name, img, graph):
-        Dragable.__init__(self, pos, name, img, self.__drop_function)
+        Dragable.__init__(self, pos, name, img)
         self.__graph = graph  # type: graph.Graph
 
+    def on_unselected(self):
+        self.__drop_function()
+        super(DragableVertex, self).on_unselected()
 
     def __drop_function(self):
+        print("DragableVertex's drop function")
         self.__graph.add_vertex(self.get_position())
+        self.set_selected(False)
