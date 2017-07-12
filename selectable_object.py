@@ -8,17 +8,18 @@ class SelectionMode:
 class Selectable:
 
     def __init__(self, pos, img, selection_mode=SelectionMode.Default):
-        self.__position = pos  # type: tuple  description: center of drawn img
+        self.position = pos  # type: tuple  description: center of drawn img
         self.__img = img  # type: pygame.Surface
         self.__img_size = self.__img_width, self.__img_height = self.__img.get_size()
         self.__flag_selected = False
+        self._flag_hover = False
         self.__selection_mode = selection_mode
 
     def get_position(self):
-        return self.__position
+        return self.position
 
     def set_position(self, value):
-        self.__position = value
+        self.position = value
 
     def set_selected(self, value=None):
         if value is None:
@@ -26,8 +27,8 @@ class Selectable:
         self.__flag_selected = value
 
     def position_on_object(self, pos):
-        left_corner = self.__position[0] - self.__img_width // 2 \
-        , self.__position[1] - self.__img_height // 2
+        left_corner = self.position[0] - self.__img_width // 2 \
+        , self.position[1] - self.__img_height // 2
         if pos[0] > left_corner[0] and pos[0] < left_corner[0]+self.__img_width:
             if pos[1] > left_corner[1] and pos[1] < left_corner[1]+self.__img_height:
                 return True
@@ -35,6 +36,9 @@ class Selectable:
 
     def is_selected(self):
         return self.__flag_selected
+    @property
+    def hover(self):
+        return self._flag_hover
 
     def get_img_size(self):
         return self.__img_size
@@ -43,7 +47,7 @@ class Selectable:
         return self.__img
 
     def on_clicked(self):
-        print("ON Click")
+        print("ON Click super")
 
     def on_release(self):
         print("ON Release")

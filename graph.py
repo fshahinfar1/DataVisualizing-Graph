@@ -23,11 +23,27 @@ class Graph:
         self.__adjacent_vertices.append([])
 
     def add_edge(self, source, destination, color=Black):
-        source_vertex = self.__vertices[source]
-        destination_vertex = self.__vertices[destination]
+        """
+
+        :param source:
+        :type source: int
+        :param destination:
+        :param color:
+        :return:
+        """
+        if(isinstance(source, Vertex)):
+            source_vertex = source
+        else:
+            source_vertex = self.__vertices[source]
+        if(isinstance(destination, Vertex)):
+            destination_vertex = destination
+        else:
+            destination_vertex = self.__vertices[destination]
         new_edge = Edge(Graph.edge_id\
         , source_vertex, destination_vertex, color)
         Graph.edge_id += 1
+        if (isinstance(source, Vertex)):
+            source = source.id
         self.__adjacent_vertices[source].append(new_edge)
 
     def get_vertices(self):
