@@ -86,12 +86,11 @@ class Vertex(Selectable):
         if self.position_on_object(mouse.get_pos()):
             if mouse_state == "clicked":
                 if(pygame.key.get_pressed()[pygame.K_LSHIFT]):
-                    print("Shift")
                     for v in self.__graph.get_vertices():
                         if v.is_selected() and v is not self:
                             self.__graph.add_edge(v, self)
+                            break
                 else:
-                    print("no Shift")
                     self.set_selected(True)
                     for v in self.__graph.get_vertices():
                         if v.is_selected() and v is not self:

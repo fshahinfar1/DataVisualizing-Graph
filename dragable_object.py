@@ -10,14 +10,15 @@ class Dragable(Selectable):
         self.__origin_position = pos  # type: tuple  description: center of drawn img
         self.__name = name  # type:
 
-    def __drop_function(self):
+    def _drop_function(self):
         print("Dragable's drop_function")
 
-    def get_name(self):
+    @property
+    def name(self):
         return self.__name
 
     def on_unselected(self):
-        self.__drop_function()
+        self._drop_function()
         self.set_position(self.__origin_position)
 
     def loop(self, mouse_state):
@@ -37,11 +38,7 @@ class DragableVertex(Dragable):
         Dragable.__init__(self, pos, name, img)
         self.__graph = graph  # type: graph.Graph
 
-    def on_unselected(self):
-        self.__drop_function()
-        super(DragableVertex, self).on_unselected()
-
-    def __drop_function(self):
+    def _drop_function(self):
         print("DragableVertex's drop function")
         self.__graph.add_vertex(self.get_position())
         self.set_selected(False)

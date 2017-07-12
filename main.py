@@ -17,12 +17,9 @@ flag_mouse_state = 'release'
 
 # create graph and fill it
 g = G()
-g.add_vertex((200,200))
-g.add_vertex((100,200))
-g.add_edge(1, 2)
-g.add_edge(0, 1, Red)
 
 #tool bar
+# todo: add tool bar
 
 # dragable
 img = pygame.Surface((20,20))

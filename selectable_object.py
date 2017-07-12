@@ -5,7 +5,7 @@ class SelectionMode:
     Default = 0
     Dragable = 1
 
-class Selectable:
+class Selectable(object):
 
     def __init__(self, pos, img, selection_mode=SelectionMode.Default):
         self.position = pos  # type: tuple  description: center of drawn img
