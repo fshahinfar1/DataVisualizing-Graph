@@ -1,5 +1,5 @@
-import color
-import vertex
+from Graph.color import *
+from Graph.vertex import *
 import math
 from pygame import Surface, draw, image, transform
 
@@ -8,19 +8,34 @@ dir_img = image.load("img/dir.png")  # type: Surface
 
 class Edge:
 
-    def __init__(self, id, source, destination, color=color.Black):
+    def __init__(self, id, source, destination, color=Black):
         """
         :type id: int
         :type source: vertex.Vertex
         :type destination: vertex.Vertex
         :type color: color.Color
         """
-        self__id = id  # type: int
-        self.__source = source  # type: vertex.Vertex
-        self.__destination = destination  # type: vertex.Vertex
-        self.__color = color  # type: color.Color
+        self.__id = id  # type: int
+        self.__source = source  # type: Vertex
+        self.__destination = destination  # type: Vertex
+        self.__color = color  # type: Color
         source.add_degree_out()
         destination.add_degree_in()
+
+    @property
+    def id(self):
+        return self.__id
+    @property
+    def source(self):
+        return self.__source
+
+    @property
+    def destination(self):
+        return self.__destination
+
+    @property
+    def color(self):
+        return self.__color
 
     def draw(self, screen):
         pos_a = self.__source.get_position()

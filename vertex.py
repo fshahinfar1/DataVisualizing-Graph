@@ -44,6 +44,13 @@ class Vertex(Selectable):
     def color(self):
         return self.__color
 
+    @color.setter
+    def color(self, c):
+        if isinstance(c, Color):
+            self.__color = c
+        else:
+            raise TypeError("expected Type Color")
+
     @property
     def radius(self):
         return self.__radius
@@ -76,6 +83,9 @@ class Vertex(Selectable):
     def on_hover(self):
         self.__color = HOVER_COLOR
 
+    def get_adjacent(self):
+        self.__graph.adjacent_vertices[self.id]
+
     def on_mouse_leave(self):
         if self.is_selected():
             self.__color = SELECTED_COLOR
@@ -106,8 +116,6 @@ class Vertex(Selectable):
             self._flag_hover = False
             self.on_mouse_leave()
 
-
-
     def draw(self, screen):
         """
         :param self
@@ -117,3 +125,7 @@ class Vertex(Selectable):
         draw.circle(screen, self.__color.get_value(), self.position, self.__radius)
         degree_text = font.render(str(self.degree_in)+"/"+str(self.degree_out), True, Blue.get_value())
         screen.blit(degree_text, self.position)
+
+    @staticmethod
+    def new(vertex):
+        return Vertex(Graph.graph.Graph.vertex_id, vertex.position, vertex._Vertex__graph, vertex.color)
