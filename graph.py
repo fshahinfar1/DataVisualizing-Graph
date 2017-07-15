@@ -63,6 +63,30 @@ class Graph:
             source = source.id
         self.__adjacent_vertices[source].append(new_edge)
 
+    def remove_vertex(self, vertex):
+        vertex_id = vertex
+        if isinstance(vertex, Vertex):
+            vertex_id = vertex.id
+        for l in self.__adjacent_vertices.values():  # type: Edge
+            for e in l:
+                if e.source.id == vertex_id or e.destination.id == vertex_id:
+                    self.remove_edge(e.id)
+        self.__adjacent_vertices.pop(vertex_id)  # remove vertex key from dict
+        for i in range(len(self.__vertices)):  # type: Vertex
+            v = self.__vertices[i]
+            if v.id == vertex_id:
+                self.__vertices.pop(i)
+                self.__node_count -= 1
+                break
+
+
+    def remove_edge(self, edge_id):
+        # todo: this implementation does not feel efficient at all
+        for l in self.__adjacent_vertices.values():  # type: list
+            for e in l:  # type: Edge
+                if e.id == edge_id:
+                    self.__adjacent_vertices[e.source.id].remove(e)
+
     def get_vertices(self):
         for v in self.__vertices:
             yield v

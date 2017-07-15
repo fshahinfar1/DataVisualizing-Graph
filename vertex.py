@@ -71,9 +71,14 @@ class Vertex(Selectable):
     def add_degree_in(self):
         self.__degree_in += 1
 
+    @staticmethod
+    def new(vertex):
+        return Vertex(Graph.graph.Graph.vertex_id, vertex.position, vertex._Vertex__graph, vertex.color)
+
     def add_degree_out(self):
         self.__degree_out += 1
 
+    # GUI functions
     def on_clicked(self):
         self.__color = SELECTED_COLOR
 
@@ -82,6 +87,8 @@ class Vertex(Selectable):
 
     def on_hover(self):
         self.__color = HOVER_COLOR
+        if pygame.key.get_pressed()[pygame.K_DELETE]:
+            self.__graph.remove_vertex(self.id)
 
     def get_adjacent(self):
         self.__graph.adjacent_vertices[self.id]
@@ -125,7 +132,3 @@ class Vertex(Selectable):
         draw.circle(screen, self.__color.get_value(), self.position, self.__radius)
         degree_text = font.render(str(self.degree_in)+"/"+str(self.degree_out), True, Blue.get_value())
         screen.blit(degree_text, self.position)
-
-    @staticmethod
-    def new(vertex):
-        return Vertex(Graph.graph.Graph.vertex_id, vertex.position, vertex._Vertex__graph, vertex.color)
