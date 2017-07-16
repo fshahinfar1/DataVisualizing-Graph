@@ -24,23 +24,26 @@ def random_selection(graph):
 
 
 def find_eulerian_tour(graph):
-    print("euler")
-    workG = G.get_algorithm_graph(graph)  # type: dict
-    current_node_id = list(workG.keys())[0]
-    while True:
-        current_vertex = tuple(graph.get_vertices())[current_node_id]  # type: Vertex
-        current_vertex.color = Yellow
-        print(current_node_id,end="=>")
-        sleep(0.5)
-        adjacent_edge_list = workG[current_node_id]
-        if adjacent_edge_list:
-            edge = adjacent_edge_list.pop() # type: int
-            next_vertex = tuple(graph.get_vertices())[edge]  # type: Vertex
-            next_vertex.color = Cyan
+    try:
+        print("euler")
+        workG = G.get_algorithm_graph(graph)  # type: dict
+        current_node_id = list(workG.keys())[0]
+        while True:
+            current_vertex = graph.get_vertex(current_node_id)  # type: Vertex
+            current_vertex.color = Yellow
+            print(current_node_id,end="=>")
             sleep(0.5)
-            current_vertex.color = DEFAULT_COLOR
-            current_node_id = edge
-        else:
-            print("Done")
-            break
+            adjacent_edge_list = workG[current_node_id]
+            if adjacent_edge_list:
+                edge = adjacent_edge_list.pop() # type: int
+                next_vertex = graph.get_vertex(edge)  # type: Vertex
+                next_vertex.color = Cyan
+                sleep(0.5)
+                current_vertex.color = DEFAULT_COLOR
+                current_node_id = edge
+            else:
+                print("Done")
+                break
+    except Exception as e:
+        print(e)
 
