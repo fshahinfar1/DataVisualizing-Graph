@@ -32,6 +32,12 @@ class Graph:
     def __len__(self):
         return self.__node_count
 
+    def get_vertex(self, vertex_id):
+        for v in self.__vertices:
+            if v.id == vertex_id:
+                return v
+        return None
+
     def add_vertex(self, pos, color=Black):
         new_vertex = Vertex(Graph.vertex_id, pos, self, color)
         self.__node_count+=1

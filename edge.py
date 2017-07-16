@@ -1,5 +1,6 @@
 from Graph.color import *
-from Graph.vertex import *
+from Graph.vertex import Vertex
+from Graph.selectable_object import Selectable
 import math
 from pygame import Surface, draw, image, transform
 
@@ -25,6 +26,7 @@ class Edge:
     @property
     def id(self):
         return self.__id
+
     @property
     def source(self):
         return self.__source
@@ -38,8 +40,8 @@ class Edge:
         return self.__color
 
     def draw(self, screen):
-        pos_a = self.__source.get_position()
-        pos_b = self.__destination.get_position()
+        pos_a = self.__source.position
+        pos_b = self.__destination.position
         draw.line(screen, self.__color.get_value()\
         , pos_a, pos_b, 5)
         mid_point =((pos_a[0]+pos_b[0])//2, (pos_a[1]+pos_b[1])//2)
