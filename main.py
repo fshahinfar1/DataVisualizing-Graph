@@ -6,6 +6,7 @@ import Graph.algoritms
 from Graph.graph import Graph as G
 from Graph.color import *
 from Graph.dragable_object import *
+from Graph.button import *
 
 pygame.init()
 
@@ -31,9 +32,10 @@ g.add_edge(4, 0)
 # print(g.adjacent_vertices)
 # animation
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
-a = executor.submit(Graph.algoritms.find_eulerian_tour, g)
+# a = executor.submit(Graph.algoritms.find_eulerian_tour, g)
 # thread0 = threading.Thread(target=Graph.algoritms.random_selection, args=(g,))
 # thread0.start()
+
 # tool bar
 # todo: add tool bar
 
@@ -43,6 +45,9 @@ img.fill(White.get_value())
 img.convert_alpha()
 pygame.draw.circle(img, Black.get_value(), (10, 10), 10)
 dragable_vertex = DragableVertex((60, 420), 'vertex dragable object', img, g)
+
+# button
+b = Button((300,200),lambda:executor.submit(Graph.algoritms.find_eulerian_tour, g))
 
 while flag_run:
     # event
@@ -57,12 +62,14 @@ while flag_run:
     # logic
     dragable_vertex.loop(flag_mouse_state)
     g.loop(flag_mouse_state)
+    b.loop(flag_mouse_state)
     if flag_mouse_state == 'clicked':
         flag_mouse_state = 'drag'
     # draw
     screen.fill(White.get_value())
     g.draw(screen)
     dragable_vertex.draw(screen)
+    b.draw(screen)
     pygame.display.update()
 
     clock.tick(30)
