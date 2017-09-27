@@ -4,7 +4,10 @@ from vertex import *
 from color import *
 from time import sleep
 import copy
+import sys
 
+SELECTED_COLOR = Yellow
+NEXT_COLOR = Cyan
 
 def random_selection(graph):
     """
@@ -24,25 +27,35 @@ def random_selection(graph):
 
 
 def find_eulerian_tour(graph):
-    try:
-        print("euler")
-        workG = G.get_algorithm_graph(graph)  # type: dict
-        current_node_id = list(workG.keys())[0]
-        while True:
-            current_vertex = graph.get_vertex(current_node_id)  # type: Vertex
-            current_vertex.color = Yellow
-            print(current_node_id,end="=>")
-            sleep(0.5)
-            adjacent_edge_list = workG[current_node_id]
-            if adjacent_edge_list:
-                edge = adjacent_edge_list.pop() # type: int
-                next_vertex = graph.get_vertex(edge)  # type: Vertex
-                next_vertex.color = Cyan
-                sleep(0.5)
-                current_vertex.color = DEFAULT_COLOR
-                current_node_id = edge
-            else:
-                print("Done")
-                break
-    except Exception as e:
-        print(e)
+    #sys.stdout = open('log_find_eulerain_tour.txt', 'w')
+    print("eulerian")
+    workG = G.get_algorithm_graph(graph)  # type: dict
+    current_node_id = list(workG.keys())[0]
+    anim = [current_node_id,]
+    while True:
+        adjacent_edge_list = workG[current_node_id]
+        if adjacent_edge_list:
+            edge = adjacent_edge_list.pop() # type: int
+            current_node_id = edge
+            anim.append(edge)
+        else:
+            print("Done")
+            break
+    play_algorithm_animation(graph, anim, 0.5)
+
+
+def play_algorithm_animation(graph, anim, delay):
+    print("first line")
+    print("in try")
+    print(anim)
+    print(len(anim))
+    for i in range(len(anim)-1):
+        print(i)
+        current_vertex = graph.get_vertex(anim[i]) #type: Vertext
+        current_vertex.color = SELECTED_COLOR
+        print(anim[i],end="=>")
+        sleep(delay)
+        next_vertex = graph.get_vertex(anim[i+1])
+        next_vertex.color = NEXT_COLOR
+        sleep(delay)
+        current_vertex.color = DEFAULT_COLOR

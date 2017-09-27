@@ -33,7 +33,7 @@ g.add_edge(4, 0)
 # animation
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
 # a = executor.submit(Graph.algoritms.find_eulerian_tour, g)
-# thread0 = threading.Thread(target=Graph.algoritms.random_selection, args=(g,))
+# thread0 = threading.Thread(target=algoritms.find_eulerian_tour, args=(g,))
 # thread0.start()
 
 # tool bar
