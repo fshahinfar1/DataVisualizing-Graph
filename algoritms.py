@@ -1,7 +1,7 @@
-from Graph.graph import Graph as G
+from graph import Graph as G
 from random import randrange
-from Graph.vertex import *
-from Graph.color import *
+from vertex import *
+from color import *
 from time import sleep
 import copy
 
@@ -46,4 +46,3 @@ def find_eulerian_tour(graph):
                 break
     except Exception as e:
         print(e)
-

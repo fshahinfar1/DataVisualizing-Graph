@@ -1,6 +1,6 @@
-from Graph.color import *
-from Graph.vertex import *
-from Graph.edge import *
+from color import *
+from vertex import *
+from edge import *
 
 
 class Graph:

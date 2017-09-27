@@ -1,6 +1,6 @@
 import pygame
-import Graph.graph
-from Graph.selectable_object import *
+import graph
+from selectable_object import *
 
 
 class Dragable(Selectable):

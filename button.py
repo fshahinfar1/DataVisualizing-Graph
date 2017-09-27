@@ -1,5 +1,5 @@
 import pygame
-from Graph.selectable_object import *
+from selectable_object import *
 
 DEFAULT_BUTTON_IMAGE = pygame.image.load("img/btn.png")
 
@@ -12,5 +12,3 @@ class Button(Selectable):
 
     def on_clicked(self):
         self.__click()
-
-

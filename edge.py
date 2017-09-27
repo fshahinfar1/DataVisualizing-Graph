@@ -1,6 +1,6 @@
-from Graph.color import *
-from Graph.vertex import Vertex
-from Graph.selectable_object import Selectable
+from color import *
+from vertex import Vertex
+from selectable_object import Selectable
 import math
 from pygame import Surface, draw, image, transform
 

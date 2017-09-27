@@ -1,7 +1,7 @@
-import Graph.graph
+import graph
 import pygame
-from Graph.color import *
-from Graph.selectable_object import *
+from color import *
+from selectable_object import *
 from pygame import Surface, draw, font, mouse
 
 font.init()
