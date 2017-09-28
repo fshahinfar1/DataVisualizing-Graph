@@ -45,7 +45,7 @@ class Graph:
         self.__adjacent_vertices[new_vertex.id] = []
         Graph.vertex_id += 1
 
-    def add_edge(self, source, destination, color=Black):
+    def add_edge(self, source, destination, val=0, color=Black):
         """
 
         :param source:
@@ -62,8 +62,7 @@ class Graph:
             destination_vertex = destination
         else:
             destination_vertex = self.__vertices[destination]
-        new_edge = Edge(Graph.edge_id\
-        , source_vertex, destination_vertex, color)
+        new_edge = Edge(Graph.edge_id, self, source_vertex, destination_vertex, val, color)
         Graph.edge_id += 1
         if (isinstance(source, Vertex)):
             source = source.id
