@@ -62,6 +62,10 @@ class Edge(SelectableAbstract):
     def color(self):
         return self.__color
 
+    @color.setter
+    def color(self, c):
+        self.__color = c
+
     def set_selectable_properties(self):
         #s_width = position.distance(source.get_pos(), destination.get_pos())
         #s_rotation = position.direction(source.get_pos(), destination.get_pos())

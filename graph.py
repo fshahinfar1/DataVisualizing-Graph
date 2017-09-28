@@ -17,6 +17,7 @@ class Graph:
             self.__node_count = 1  # type: int
             self.__vertices = [Vertex(Graph.vertex_id, (150, 150), self)]  # type: list
             self.__adjacent_vertices[Graph.vertex_id] = []
+            self.__lock = False
             Graph.vertex_id += 1
         else:
             self.__node_count = len(graph)  # type: int
@@ -36,6 +37,17 @@ class Graph:
         for v in self.__vertices:
             if v.id == vertex_id:
                 return v
+        return None
+
+    @property
+    def lock(self):
+        return self.__lock
+
+    def get_edge(self, edge_id):
+        for edges in self.__adjacent_vertices.values():
+            for edge in edges:
+                if edge.id ==  edge_id:
+                    return edge
         return None
 
     def add_vertex(self, pos, color=Black):
@@ -101,11 +113,12 @@ class Graph:
         return dict(self.__adjacent_vertices)
 
     def loop(self, mouse_state):
-        for vertex in self.__vertices:
-            vertex.loop(mouse_state)
-        for edges in self.__adjacent_vertices.values():
-            for edge in edges:
-                edge.loop(mouse_state)
+        if  not self.lock:
+            for vertex in self.__vertices:
+                vertex.loop(mouse_state)
+            for edges in self.__adjacent_vertices.values():
+                for edge in edges:
+                    edge.loop(mouse_state)
 
     def draw(self, screen):
         for edges in self.__adjacent_vertices.values():
@@ -126,5 +139,5 @@ class Graph:
         for v in Graph.get_vertices():
             g[v.id] = []
             for e in edges[v.id]: # type: Edge
-                g[v.id].append(e.destination.id)
+                g[v.id].append((e.destination.id, e.value, e.id))
         return g

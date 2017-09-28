@@ -4,6 +4,7 @@ from vertex import *
 from color import *
 from time import sleep
 import copy
+import UFDS
 
 SELECTED_COLOR = Yellow
 NEXT_COLOR = Cyan
@@ -33,8 +34,8 @@ def find_eulerian_tour(graph):
     anim = [current_node_id,]
     while True:
         adjacent_edge_list = workG[current_node_id]
-        if adjacent_edge_list:
-            edge = adjacent_edge_list.pop() # type: int
+        if adjacent_edge_list: #tpye: tuple
+            edge = adjacent_edge_list.pop()[0] # type: int
             current_node_id = edge
             anim.append(edge)
         else:
@@ -42,6 +43,29 @@ def find_eulerian_tour(graph):
             break
     play_algorithm_animation(graph, anim, 0.5)
 
+def kruskal(graph):
+    try:
+        graph._Graph__lock = True
+        print("kruskal")
+        anim = []
+        workG = G.get_algorithm_graph(graph)
+        tree = UFDS.UFDS(len(graph))
+        all_edges = [(i, j[0], j[1], j[2]) for i in workG.keys() for j in workG[i]]
+        all_edges.sort(key=lambda x: x[2], reverse=False)
+        print(all_edges)
+        for i in range(len(all_edges)):
+            e = all_edges[i]
+            print(e)
+            if(not tree.is_same_set(e[0], e[1])):
+                anim.append(e)
+                tree.union_set(e[0], e[1])
+        print(anim)
+        for i in range(len(anim)):
+            current_edge = graph.get_edge(anim[i][3]) #type: Vertext
+            current_edge.color = SELECTED_COLOR
+            sleep(0.5)
+    except e:
+        print(e)
 
 def play_algorithm_animation(graph, anim, delay):
     for i in range(len(anim)-1):
