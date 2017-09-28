@@ -1,9 +1,60 @@
 import pygame
+from enum import Enum
 
 
-class SelectionMode:
+class SelectionMode(Enum):
     Default = 0
     Dragable = 1
+
+
+
+class SelectableAbstract(object):
+
+    def __init__(self, pos, r, range_x, m):
+        self._position = pos
+        self._range = r
+        self._range_x = range_x
+        # self.__width = width
+        # self.__height = height
+        # self.__rotation = rotation
+        self._m = m
+        self.__flag_selected = False
+        self._flag_hover = False
+
+    @property
+    def hover(self):
+        return self._flag_hover
+
+    def set_selected(self, value=None):
+        if value is None:
+            value = not self.__flag_selected
+        self.__flag_selected = value
+
+    def is_selected(self):
+        return self.__flag_selected
+
+    def is_in_range(self, x):
+        if x >= self._range_x[0] and x <= self._range_x[1]:
+            return True
+        return False
+
+    def on_clicked(self):
+        pass
+
+    def on_release(self):
+        pass
+
+    def on_unselected(self):
+        pass
+
+    def on_hover(self):
+        pass
+
+    def position_on_object(self, pos):
+        pass
+
+    def loop(self, mouse_state):
+        pass
 
 
 class Selectable(object):

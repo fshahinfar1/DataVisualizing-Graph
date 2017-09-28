@@ -4,7 +4,6 @@ from vertex import *
 from color import *
 from time import sleep
 import copy
-import sys
 
 SELECTED_COLOR = Yellow
 NEXT_COLOR = Cyan
@@ -45,12 +44,7 @@ def find_eulerian_tour(graph):
 
 
 def play_algorithm_animation(graph, anim, delay):
-    print("first line")
-    print("in try")
-    print(anim)
-    print(len(anim))
     for i in range(len(anim)-1):
-        print(i)
         current_vertex = graph.get_vertex(anim[i]) #type: Vertext
         current_vertex.color = SELECTED_COLOR
         print(anim[i],end="=>")

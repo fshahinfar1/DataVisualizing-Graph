@@ -104,6 +104,9 @@ class Graph:
     def loop(self, mouse_state):
         for vertex in self.__vertices:
             vertex.loop(mouse_state)
+        for edges in self.__adjacent_vertices.values():
+            for edge in edges:
+                edge.loop(mouse_state)
 
     def draw(self, screen):
         for edges in self.__adjacent_vertices.values():

@@ -1,5 +1,0 @@
-eulerian
-Done
-first line
-in try
-[0, 1, 2, 3, 4, 0]
