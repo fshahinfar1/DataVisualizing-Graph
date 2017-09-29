@@ -7,7 +7,7 @@ import pygame
 
 
 
-executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
 
 
 def main(graph):
@@ -15,6 +15,8 @@ def main(graph):
         c  = input(">")
         if(c == "kruskal"):
             executor.submit(algoritms.kruskal, graph)
+        if(c == "eulerian_tour"):
+            executor.submit(algoritms.find_eulerian_tour, graph)
         elif(c == "unlock"):
             graph._Graph__lock = False
         elif(c == "exit"):

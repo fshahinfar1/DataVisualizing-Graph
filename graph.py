@@ -112,6 +112,14 @@ class Graph:
     def adjacent_vertices(self):
         return dict(self.__adjacent_vertices)
 
+    def set_default_color(self):
+        for v in self.__vertices:
+            v.color = DEFAULT_COLOR
+
+        for edges in self.__adjacent_vertices.values():
+            for edge in edges:
+                edge.color = DEFAULT_COLOR
+
     def loop(self, mouse_state):
         if  not self.lock:
             for vertex in self.__vertices:

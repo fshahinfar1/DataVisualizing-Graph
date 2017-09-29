@@ -28,24 +28,31 @@ def random_selection(graph):
 
 
 def find_eulerian_tour(graph):
-    #sys.stdout = open('log_find_eulerain_tour.txt', 'w')
-    print("eulerian")
-    workG = G.get_algorithm_graph(graph)  # type: dict
-    current_node_id = list(workG.keys())[0]
-    anim = [current_node_id,]
-    while True:
-        adjacent_edge_list = workG[current_node_id]
-        if adjacent_edge_list: #tpye: tuple
-            edge = adjacent_edge_list.pop()[0] # type: int
-            current_node_id = edge
-            anim.append(edge)
-        else:
-            break
-    play_algorithm_animation(graph, anim, 0.5)
+    try:
+        graph._Graph__lock = True
+        graph.set_default_color()
+        print("eulerian")
+        workG = G.get_algorithm_graph(graph)  # type: dict
+        current_node_id = list(workG.keys())[0]
+        anim = [current_node_id,]
+        while True:
+            adjacent_edge_list = workG[current_node_id]
+            if adjacent_edge_list: #tpye: tuple
+                edge = adjacent_edge_list.pop()[0] # type: int
+                current_node_id = edge
+                anim.append(edge)
+            else:
+                break
+        play_algorithm_animation(graph, anim, 0.5)
+    except Exception as e:
+        print("error")
+        print(e)
+        traceback.print_exc()
 
 def kruskal(graph):
     try:
         graph._Graph__lock = True
+        graph.set_default_color()
         print("kruskal")
         anim = []
         workG = G.get_algorithm_graph(graph) # type : dict
